@@ -21,7 +21,7 @@ const store = createStore({
           note: "Edeka"
         },
         {
-          id: 2,
+          id: 3,
           date: "28.04.2020",
           type: "income",
           category: "Gehalt",
