@@ -29,11 +29,41 @@ const store = createStore({
           note: "Edeka"
         },
       ],
+      categories: [
+        {
+          type: "expense",
+          key: "living",
+          value: "Wohnen",
+        },
+        {
+          type: "expense",
+          key: "household",
+          value: "Haushalt",
+        },
+        {
+          type: "expense",
+          key: "groceries",
+          value: "Lebensmittel",
+        },
+        {
+          type: "income",
+          key: "salary",
+          value: "Gehalt",
+        },
+        {
+          type: "income",
+          key: "gift",
+          value: "Geldgeschenk",
+        },
+      ],
     };
   },
   getters: {
     entries(state) {
       return state.entries;
+    },
+    categories(state) {
+      return state.categories;
     },
     // getElementById: (state) => (id) => {
     //   return state.elements.find(ele => ele.id == id)
