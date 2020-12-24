@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { IonItem, IonItemOption, IonItemOptions, IonItemSliding, } from '@ionic/vue';
+import { IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonIcon } from '@ionic/vue';
 import { pencil, trash } from "ionicons/icons";
 
 export default {
@@ -29,7 +29,8 @@ export default {
     IonItem,
     IonItemOption, 
     IonItemOptions, 
-    IonItemSliding, 
+    IonItemSliding,
+    IonIcon,
   },
   data() {
     return { pencil, trash };
