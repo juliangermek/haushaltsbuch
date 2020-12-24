@@ -27,7 +27,11 @@ const routes = [
   {
     path: '/tabs/entries/add',
     component: () => import('@/views/AddEntry.vue')
-  }
+  },
+  {
+    path: '/test',
+    component: () => import('@/views/Test.vue')
+  },
 ]
 
 const router = createRouter({
