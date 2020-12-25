@@ -2,7 +2,7 @@
   <ion-item-sliding>
 
     <ion-item>
-      <div slot="start" class="date">{{ entry.date }}</div>
+      <div slot="start" class="date">{{ format_date(entry.date) }}</div>
       <div>{{ entry.category }}</div>
       <div slot="end" :class="[entry.type === 'expense'  ? 'is_expense' : 'is_income']" >{{ entry.amount }} €</div>
     </ion-item>
@@ -22,6 +22,7 @@
 <script>
 import { IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonIcon } from '@ionic/vue';
 import { pencil, trash } from "ionicons/icons";
+import moment from 'moment';
 
 export default {
   props: ["entry"],
@@ -34,6 +35,13 @@ export default {
   },
   data() {
     return { pencil, trash };
+  },
+  methods: {
+    format_date(value){
+        if (value) {
+          return moment(String(value)).format('DD.MM.YYYY')
+        }
+    },
   },
 }
 </script>

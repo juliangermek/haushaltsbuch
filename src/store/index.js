@@ -6,7 +6,7 @@ const store = createStore({
       entries: [
         {
           id: 1,
-          date: "15.04.2020",
+          date: "2020-04-15T14:48:00.000Z",
           type: "expense",
           category: "Lebensmittel",
           amount: 15.24,
@@ -14,7 +14,7 @@ const store = createStore({
         },
         {
           id: 2,
-          date: "17.04.2020",
+          date: "2020-04-17T14:48:00.000Z",
           type: "expense",
           category: "Mobilität",
           amount: 2.31,
@@ -22,7 +22,7 @@ const store = createStore({
         },
         {
           id: 3,
-          date: "28.04.2020",
+          date: "2020-10-28T14:48:00.000Z",
           type: "income",
           category: "Gehalt",
           amount: 2000.00,
@@ -65,10 +65,26 @@ const store = createStore({
     categories(state) {
       return state.categories;
     },
-    // getElementById: (state) => (id) => {
-    //   return state.elements.find(ele => ele.id == id)
-    // },
-  }
+  },
+  mutations: {
+    addEntry(state, entryData) {
+      const newEntry = {
+        id: new Date().toISOString(),
+        date: entryData.date,
+        type: entryData.type,
+        category: entryData.category,
+        amount: entryData.amount,
+        note: entryData.note,
+      };
+
+      state.entries.push(newEntry);
+    }
+  },
+  actions: {
+    addEntry(context, entryData) {
+      context.commit("addEntry", entryData); // Place to store in backend server
+    }
+  },
 });
 
 export default store;
