@@ -2,9 +2,30 @@
   <ion-item-sliding>
 
     <ion-item>
-      <div slot="start" class="date">{{ format_date(entry.date) }}</div>
-      <div>{{ entry.category }}</div>
-      <div slot="end" :class="[entry.type === 'expense'  ? 'is_expense' : 'is_income']" >{{ entry.amount }} €</div>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="2">
+            <span style="font-size:20px">{{ format_date(entry.date) }}</span>
+          </ion-col>
+          <ion-col  size="5">
+            <ion-row>
+              <ion-col style="padding:0">
+                {{ entry.category }}
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col style="padding:0">
+                <span style="color:grey">{{entry.note}}</span>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          <ion-col  size="5" style="text-align: right">
+            <div :class="[entry.type === 'expense'  ? 'is_expense' : 'is_income']" >{{ entry.amount }} €</div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
     </ion-item>
 
     <ion-item-options>
@@ -20,7 +41,7 @@
 </template>
 
 <script>
-import { IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonIcon } from '@ionic/vue';
+import { IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonIcon, IonGrid, IonRow, IonCol } from '@ionic/vue';
 import { pencil, trash } from "ionicons/icons";
 import moment from 'moment';
 
@@ -32,6 +53,9 @@ export default {
     IonItemOptions, 
     IonItemSliding,
     IonIcon,
+    IonGrid,
+    IonRow,
+    IonCol,
   },
   data() {
     return { pencil, trash };
@@ -39,7 +63,7 @@ export default {
   methods: {
     format_date(value){
         if (value) {
-          return moment(String(value)).format('DD.MM.YYYY')
+          return moment(String(value)).format('DD')
         }
     },
   },
@@ -58,5 +82,12 @@ export default {
 }
 .is_income {
   color: var(--ion-color-success);
+}
+
+ion-row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }
 </style>

@@ -25,7 +25,11 @@
 
       <ion-item>
         <ion-label>Kategorie</ion-label>
-        <ion-select interface="action-sheet" v-model="selectedCategory">
+        <ion-select
+          interface="action-sheet"
+          v-model="selectedCategory"
+          aria-required="required"
+        >
           <ion-select-option
             v-for="category in filteredCategories"
             :key="category.key"
@@ -43,6 +47,7 @@
           min="0"
           step="0.01"
           v-model="enteredAmount"
+          required
         ></ion-input>
         <span slot="end">€</span>
       </ion-item>

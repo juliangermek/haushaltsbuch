@@ -14,7 +14,7 @@ const store = createStore({
         },
         {
           id: 2,
-          date: "2020-04-17T14:48:00.000Z",
+          date: "2020-04-13T14:48:00.000Z",
           type: "expense",
           category: "Mobilität",
           amount: 2.31,

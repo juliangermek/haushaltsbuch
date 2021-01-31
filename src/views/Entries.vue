@@ -7,9 +7,8 @@
     </template>
 
     <ion-content class="ion-padding">
-
+      <!-- <ion-button color="medium" @click="toggleSort">Reihenfolge umkehren</ion-button> -->
       <entry-list :entries="entries"></entry-list>
-      
     </ion-content>
   </base-layout>
 </template>
@@ -28,11 +27,29 @@ export default {
     EntryList,
   },
   data() {
-    return { add };
+    return {
+      add,
+      oldestFirst: false,
+    };
   },
   computed: {
     entries() {
-      return this.$store.getters.entries;
+      var entires = this.$store.getters.entries;
+
+      var order = this.oldestFirst ? 1 : -1;
+      entires.sort(function(a, b) { // this wegmachen?
+        a = new Date(a.date);
+        b = new Date(b.date);
+        var results = a > b ? -1 : a < b ? 1 : 0;
+        return results * order;
+      });
+
+      return entires;
+    }
+  },
+  methods: {
+    toggleSort: function() {
+      this.oldestFirst = !this.oldestFirst;
     }
   },
 };
