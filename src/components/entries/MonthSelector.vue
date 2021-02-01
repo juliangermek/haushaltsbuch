@@ -28,15 +28,8 @@
 <script>
 import { IonIcon, IonSlides, IonSlide, IonButton } from "@ionic/vue";
 import { chevronBack, chevronForward } from "ionicons/icons";
-import { onMounted, ref } from 'vue';
 
 export default {
-
-  methods: {
-    // nextSlide() {
-    //   console.log("prevSlide");
-    // }
-  },
 
   components: {
     IonIcon,
@@ -48,55 +41,37 @@ export default {
   data() {
     return {
       chevronBack,
-      chevronForward
+      chevronForward,
+      slideOpts: {
+        initialSlide: 0,
+        speed: 400,
+        pagination: false,
+      },
+      disablePrevBtn: true,
+      disableNextBtn: false,
     };
   },
 
-  computed: {
-    // activeSlide() {
-    //   return this.myslider.getActiveIndex()
-    // }
-  },
-
-  setup() {
-    // Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
-    const slideOpts = {
-      initialSlide: 1,
-      speed: 400,
-      pagination: false,
-    };
-
-    const mySlider = ref(null);
-    const disablePrevBtn = ref(true);
-    const disableNextBtn = ref(false);
-
-    onMounted(()=>{
-      // console.log(mySlider.value);
-      // console.log(prevSlide);
-    });
-
-    const prevSlide = async () => {
-      const s = await mySlider?.value?.$el.getSwiper();
+  methods: {
+    async prevSlide() {
+      const s = await this.$refs.mySlider.$el.getSwiper();
       await s.slidePrev();
-    }
-    const nextSlide = async () => {
-      const s = await mySlider?.value?.$el.getSwiper();
+    },
+    async nextSlide() {
+      const s = await this.$refs.mySlider.$el.getSwiper();
       await s.slideNext();
-    }
+    },
+    async slideChanged() {
+      console.log("slide changed 2");
 
-    const slideChanged = async () => {
-      // when slide changes, enable/disable respective buttons
-      console.log("slide changed");
-      const s = await mySlider?.value?.$el.getSwiper();
-      
+      const s = await this.$refs.mySlider.$el.getSwiper();
+
       const sliderLength = s.slides.length;
       const activeSlide = s.activeIndex;
 
-      disablePrevBtn.value = activeSlide === 0;
-      disableNextBtn.value = activeSlide === sliderLength-1;
-    }
-
-    return { slideOpts, mySlider, prevSlide, nextSlide, slideChanged, disablePrevBtn, disableNextBtn };
+      this.disablePrevBtn = activeSlide === 0;
+      this.disableNextBtn = activeSlide === sliderLength-1;
+    },
   },
 
 };
