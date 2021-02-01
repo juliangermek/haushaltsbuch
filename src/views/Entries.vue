@@ -7,6 +7,7 @@
     </template>
 
     <ion-content class="ion-padding">
+      <month-selector></month-selector>
       <!-- <ion-button color="medium" @click="toggleSort">Reihenfolge umkehren</ion-button> -->
       <entry-list :entries="entries"></entry-list>
     </ion-content>
@@ -17,6 +18,7 @@
 import { IonButton, IonIcon, IonContent, } from "@ionic/vue";
 import { add } from "ionicons/icons";
 
+import MonthSelector from "../components/entries/MonthSelector.vue";
 import EntryList from "../components/entries/EntryList.vue";
 
 export default {
@@ -24,6 +26,7 @@ export default {
     IonButton,
     IonIcon,
     IonContent,
+    MonthSelector,
     EntryList,
   },
   data() {
