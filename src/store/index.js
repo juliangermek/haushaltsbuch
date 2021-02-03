@@ -6,7 +6,7 @@ const store = createStore({
       entries: [
         {
           id: 1,
-          date: "2020-04-15T14:48:00.000Z",
+          date: "2020-10-15T14:48:00.000Z",
           type: "expense",
           category: "Lebensmittel",
           amount: 15.24,
@@ -14,7 +14,7 @@ const store = createStore({
         },
         {
           id: 2,
-          date: "2020-04-13T14:48:00.000Z",
+          date: "2020-10-13T14:48:00.000Z",
           type: "expense",
           category: "Mobilität",
           amount: 2.31,
@@ -22,7 +22,7 @@ const store = createStore({
         },
         {
           id: 3,
-          date: "2020-10-28T14:48:00.000Z",
+          date: "2020-11-28T14:48:00.000Z",
           type: "income",
           category: "Gehalt",
           amount: 2000.00,

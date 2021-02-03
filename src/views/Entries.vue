@@ -15,8 +15,11 @@
 </template>
 
 <script>
-import { IonButton, IonIcon, IonContent, } from "@ionic/vue";
+import { IonButton, IonIcon, IonContent } from "@ionic/vue";
 import { add } from "ionicons/icons";
+import moment from "moment";
+import "moment/locale/de"; // without this line it didn't work
+moment.locale("de");
 
 import MonthSelector from "../components/entries/MonthSelector.vue";
 import EntryList from "../components/entries/EntryList.vue";
@@ -37,23 +40,49 @@ export default {
   },
   computed: {
     entries() {
-      var entires = this.$store.getters.entries;
+      var entries = this.$store.getters.entries;
 
+      // Order entries
       var order = this.oldestFirst ? 1 : -1;
-      entires.sort(function(a, b) { // this wegmachen?
+      entries.sort(function(a, b) {
+        // this wegmachen?
         a = new Date(a.date);
         b = new Date(b.date);
         var results = a > b ? -1 : a < b ? 1 : 0;
         return results * order;
       });
 
-      return entires;
+      return entries;
+    },
+  },
+
+  beforeMount() {
+    /* Create var "months" that contains all available months in entries */
+    var entries = this.$store.getters.entries;
+
+    var months = [];
+    var months_unique = [];
+    var current_index = 0;
+
+    for (var i in entries) {
+      var month = moment(String(entries[i].date)).format("MM");
+      var year = moment(String(entries[i].date)).format("YYYY");
+      var displayMonth = moment(String(entries[i].date)).format("MMMM YYYY");
+
+      if(!months_unique.includes(displayMonth)){ // Push if displayMonth not existent yet
+        months_unique.push(displayMonth);
+        months.push({
+          "index": current_index, "month": month, "year": year, "displayMonth": displayMonth
+        });
+        current_index++;
+      }
     }
   },
+
   methods: {
-    toggleSort: function() {
+    toggleSort() {
       this.oldestFirst = !this.oldestFirst;
-    }
+    },
   },
 };
 </script>
