@@ -17,6 +17,8 @@
   <ion-button @click="nextSlide" :disabled="disableNextBtn">
     <ion-icon slot="icon-only" :icon="chevronForward"></ion-icon>
   </ion-button>
+
+  <p>activeSlide: {{activeMonth}}</p>
 </template>
 
 <script>
@@ -36,7 +38,7 @@ export default {
       chevronBack,
       chevronForward,
       slideOpts: {
-        initialSlide: 0,
+        initialSlide: this.activeMonth,
         speed: 400,
         pagination: false,
       },
@@ -49,6 +51,8 @@ export default {
         { key: 2, month: "September 2020" },
         { key: 3, month: "Oktober 2020" },
       ],
+
+      activeMonth: 0,
     };
   },
 
@@ -67,6 +71,10 @@ export default {
       const sliderLength = s.slides.length;
       const activeSlide = s.activeIndex;
 
+      // Update activeMonth
+      this.activeMonth = activeSlide;
+
+      // Update availability
       this.disablePrevBtn = activeSlide === 0;
       this.disableNextBtn = activeSlide === sliderLength - 1;
     },
