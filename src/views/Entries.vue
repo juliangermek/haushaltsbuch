@@ -7,7 +7,7 @@
     </template>
 
     <ion-content class="ion-padding">
-      <month-selector></month-selector>
+      <month-selector :entries-months="entriesMonths"></month-selector>
       <!-- <ion-button color="medium" @click="toggleSort">Reihenfolge umkehren</ion-button> -->
       <entry-list :entries="entries"></entry-list>
     </ion-content>
@@ -36,6 +36,7 @@ export default {
     return {
       add,
       oldestFirst: false,
+      entriesMonths: [],
     };
   },
   computed: {
@@ -57,10 +58,10 @@ export default {
   },
 
   beforeMount() {
-    /* Create var "months" that contains all available months in entries */
+    /* Create var "entriesMonths" that contains all available months in entries */
     var entries = this.$store.getters.entries;
 
-    var months = [];
+    var entriesMonths = [];
     var months_unique = [];
     var current_index = 0;
 
@@ -71,11 +72,13 @@ export default {
 
       if(!months_unique.includes(displayMonth)){ // Push if displayMonth not existent yet
         months_unique.push(displayMonth);
-        months.push({
+        entriesMonths.push({
           "index": current_index, "month": month, "year": year, "displayMonth": displayMonth
         });
         current_index++;
       }
+
+      this.entriesMonths = entriesMonths;
     }
   },
 

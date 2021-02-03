@@ -9,8 +9,8 @@
     :options="slideOpts"
     @ionSlideDidChange="slideChanged"
   >
-    <ion-slide v-for="month in sliderMonths" :key="month.key">
-      <span>{{ month.month }}</span>
+    <ion-slide v-for="month in entriesMonths" :key="month.index">
+      <span>{{ month.displayMonth }}</span>
     </ion-slide>
   </ion-slides>
 
@@ -33,6 +33,10 @@ export default {
     IonButton,
   },
 
+  props: [
+    "entriesMonths"
+  ],
+
   data() {
     return {
       chevronBack,
@@ -44,13 +48,6 @@ export default {
       },
       disablePrevBtn: true,
       disableNextBtn: false,
-
-      sliderMonths: [
-        { key: 0, month: "Juli 2020" },
-        { key: 1, month: "August 2020" },
-        { key: 2, month: "September 2020" },
-        { key: 3, month: "Oktober 2020" },
-      ],
 
       activeMonth: 0,
     };
