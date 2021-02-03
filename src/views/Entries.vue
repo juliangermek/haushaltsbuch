@@ -17,6 +17,7 @@
 <script>
 import { IonButton, IonIcon, IonContent } from "@ionic/vue";
 import { add } from "ionicons/icons";
+
 import moment from "moment";
 import "moment/locale/de"; // without this line it didn't work
 moment.locale("de");
@@ -35,32 +36,37 @@ export default {
   data() {
     return {
       add,
-      oldestFirst: false,
+      entries: [],
       entriesMonths: [],
     };
   },
-  computed: {
-    entries() {
-      var entries = this.$store.getters.entries;
-
-      // Order entries
-      var order = this.oldestFirst ? 1 : -1;
-      entries.sort(function(a, b) {
-        // this wegmachen?
-        a = new Date(a.date);
-        b = new Date(b.date);
-        var results = a > b ? -1 : a < b ? 1 : 0;
-        return results * order;
-      });
-
-      return entries;
-    },
-  },
 
   beforeMount() {
-    /* Create var "entriesMonths" that contains all available months in entries */
     var entries = this.$store.getters.entries;
 
+    //Sort entries
+    var order = -1;
+    entries.sort(function(a, b) {
+      a = new Date(a.date);
+      b = new Date(b.date);
+      var results = a > b ? -1 : a < b ? 1 : 0;
+      return results * order;
+    });
+
+    this.entries = entries;
+
+    // Save newest month to store
+    var newest_entry = entries[entries.length - 1];
+    var newest_month = moment(String(newest_entry.date)).format("MM");
+    var newest_year = moment(String(newest_entry.date)).format("YYYY");
+    const newestMonth = {
+      month: newest_month,
+      year: newest_year,
+    };
+
+    this.$store.dispatch("updateActiveMonth", newestMonth);
+
+    /* Create var "entriesMonths" that contains all available months in entries */
     var entriesMonths = [];
     var months_unique = [];
     var current_index = 0;
@@ -83,9 +89,26 @@ export default {
   },
 
   methods: {
-    toggleSort() {
-      this.oldestFirst = !this.oldestFirst;
-    },
+    // toggleSort() {
+    //   this.oldestFirst = !this.oldestFirst;
+    // },
+    // For sorting:
+    // requires data variable: oldestFirst: false,
+    // entries() {
+    //   var entries = this.$store.getters.entries;
+
+    //   // Order entries
+    //   var order = this.oldestFirst ? 1 : -1;
+    //   entries.sort(function(a, b) {
+    //     // this wegmachen?
+    //     a = new Date(a.date);
+    //     b = new Date(b.date);
+    //     var results = a > b ? -1 : a < b ? 1 : 0;
+    //     return results * order;
+    //   });
+
+    //   return entries;
+    // },
   },
 };
 </script>

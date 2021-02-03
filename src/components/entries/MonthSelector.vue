@@ -18,7 +18,8 @@
     <ion-icon slot="icon-only" :icon="chevronForward"></ion-icon>
   </ion-button>
 
-  <p>activeSlide: {{activeMonth}}</p>
+  <p>activeSlide: {{ activeSlide }}</p>
+  <p>entriesMonths: {{ entriesMonths }}</p>
 </template>
 
 <script>
@@ -33,23 +34,21 @@ export default {
     IonButton,
   },
 
-  props: [
-    "entriesMonths"
-  ],
+  props: ["entriesMonths"],
 
   data() {
     return {
       chevronBack,
       chevronForward,
-      slideOpts: {
-        initialSlide: this.activeMonth,
-        speed: 400,
-        pagination: false,
-      },
       disablePrevBtn: true,
       disableNextBtn: false,
 
-      activeMonth: 0,
+      slideOpts: {
+        initialSlide: this.entriesMonths.length - 1, // Start with newest slide / month
+        speed: 300,
+        pagination: false,
+      },
+      activeSlide: 0,
     };
   },
 
@@ -68,12 +67,32 @@ export default {
       const sliderLength = s.slides.length;
       const activeSlide = s.activeIndex;
 
-      // Update activeMonth
-      this.activeMonth = activeSlide;
-
-      // Update availability
+      // Update activeSlide and button availability
+      this.activeSlide = activeSlide;
       this.disablePrevBtn = activeSlide === 0;
       this.disableNextBtn = activeSlide === sliderLength - 1;
+
+      // Update store
+      const entriesMonths = this.entriesMonths;
+      const activeEntriesMonths = entriesMonths.filter(
+        (entriesMonths) => entriesMonths.index == activeSlide
+      );
+      console.log("activeEntriesMonths");
+      console.log(activeEntriesMonths);
+      console.log("activeEntriesMonths.year");
+      console.log(activeEntriesMonths.year);
+
+
+      const activeMonth = {
+        month: activeEntriesMonths.month,
+        year: activeEntriesMonths.year,
+      };
+      console.log("activeMonth");
+      console.log(activeMonth);
+
+      // this.$store.dispatch("updateActiveMonth", activeMonth);
+
+
     },
   },
 };

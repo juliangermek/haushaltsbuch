@@ -56,6 +56,7 @@ const store = createStore({
           value: "Geldgeschenk",
         },
       ],
+      activeMonth: {month: 0, year: 0}
     };
   },
   getters: {
@@ -65,6 +66,9 @@ const store = createStore({
     categories(state) {
       return state.categories;
     },
+    activeMonth(state) {
+      return state.activeMonth;
+    }
   },
   mutations: {
     addEntry(state, entryData) {
@@ -78,12 +82,19 @@ const store = createStore({
       };
 
       state.entries.push(newEntry);
-    }
+    },
+    updateActiveMonth(state, activeMonth) {
+      state.activeMonth.month = activeMonth.month;
+      state.activeMonth.year = activeMonth.year;
+    },
   },
   actions: {
     addEntry(context, entryData) {
       context.commit("addEntry", entryData); // Place to store in backend server
-    }
+    },
+    updateActiveMonth(context, activeMonth) {
+      context.commit("updateActiveMonth", activeMonth); // Place to store in backend server
+    },
   },
 });
 
