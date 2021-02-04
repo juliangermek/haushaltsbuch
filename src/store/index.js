@@ -28,6 +28,22 @@ const store = createStore({
           amount: 2000.00,
           note: "Edeka"
         },
+        {
+          id: 4,
+          date: "2020-11-14T14:48:00.000Z",
+          type: "expense",
+          category: "Wohnen",
+          amount: 59.99,
+          note: "Stuhl"
+        },
+        {
+          id: 5,
+          date: "2019-11-14T14:48:00.000Z",
+          type: "expense",
+          category: "Lebensmittel",
+          amount: 123.45,
+          note: "Steaks"
+        },
       ],
       categories: [
         {

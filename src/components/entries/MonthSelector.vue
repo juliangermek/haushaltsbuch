@@ -17,9 +17,6 @@
   <ion-button @click="nextSlide" :disabled="disableNextBtn">
     <ion-icon slot="icon-only" :icon="chevronForward"></ion-icon>
   </ion-button>
-
-  <p>activeSlide: {{ activeSlide }}</p>
-  <p>entriesMonths: {{ entriesMonths }}</p>
 </template>
 
 <script>
