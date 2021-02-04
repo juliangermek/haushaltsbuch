@@ -1,26 +1,46 @@
 <template>
-  <ion-button @click="prevSlide" :disabled="disablePrevBtn">
-    <ion-icon slot="icon-only" :icon="chevronBack"></ion-icon>
-  </ion-button>
+  <ion-grid>
+    <ion-row>
 
-  <ion-slides
-    ref="mySlider"
-    pager="true"
-    :options="slideOpts"
-    @ionSlideDidChange="slideChanged"
-  >
-    <ion-slide v-for="month in entriesMonths" :key="month.index">
-      <span>{{ month.displayMonth }}</span>
-    </ion-slide>
-  </ion-slides>
+      <ion-col>
+        <ion-button @click="prevSlide" :disabled="disablePrevBtn">
+          <ion-icon slot="icon-only" :icon="chevronBack"></ion-icon>
+        </ion-button>
+      </ion-col>
 
-  <ion-button @click="nextSlide" :disabled="disableNextBtn">
-    <ion-icon slot="icon-only" :icon="chevronForward"></ion-icon>
-  </ion-button>
+      <ion-col>
+        <ion-slides
+          ref="mySlider"
+          pager="true"
+          :options="slideOpts"
+          @ionSlideDidChange="slideChanged"
+        >
+          <ion-slide v-for="month in entriesMonths" :key="month.index">
+            <span>{{ month.displayMonth }}</span>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+
+      <ion-col>
+        <ion-button @click="nextSlide" :disabled="disableNextBtn">
+          <ion-icon slot="icon-only" :icon="chevronForward"></ion-icon>
+        </ion-button>
+      </ion-col>
+      
+    </ion-row>
+  </ion-grid>
 </template>
 
 <script>
-import { IonIcon, IonSlides, IonSlide, IonButton } from "@ionic/vue";
+import {
+  IonIcon,
+  IonSlides,
+  IonSlide,
+  IonButton,
+  IonGrid,
+  IonRow,
+  IonCol,
+} from "@ionic/vue";
 import { chevronBack, chevronForward } from "ionicons/icons";
 
 export default {
@@ -29,6 +49,9 @@ export default {
     IonSlides,
     IonSlide,
     IonButton,
+    IonGrid,
+    IonRow,
+    IonCol,
   },
 
   props: ["entriesMonths"],
@@ -50,7 +73,7 @@ export default {
   },
 
   beforeMount() {
-    if(this.entriesMonths.length <= 1) {
+    if (this.entriesMonths.length <= 1) {
       this.disableNextBtn = true;
     }
   },
