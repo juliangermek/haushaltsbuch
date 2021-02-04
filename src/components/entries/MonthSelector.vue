@@ -49,6 +49,12 @@ export default {
     };
   },
 
+  beforeMount() {
+    if(this.entriesMonths.length <= 1) {
+      this.disableNextBtn = true;
+    }
+  },
+
   methods: {
     async prevSlide() {
       const s = await this.$refs.mySlider.$el.getSwiper();
