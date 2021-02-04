@@ -75,24 +75,14 @@ export default {
       // Update store
       const entriesMonths = this.entriesMonths;
       const activeEntriesMonths = entriesMonths.filter(
-        (entriesMonths) => entriesMonths.index == activeSlide
+        (entriesMonths) => entriesMonths.index == activeSlide // get only months on activeSlide
       );
-      console.log("activeEntriesMonths");
-      console.log(activeEntriesMonths);
-      console.log("activeEntriesMonths.year");
-      console.log(activeEntriesMonths.year);
-
 
       const activeMonth = {
-        month: activeEntriesMonths.month,
-        year: activeEntriesMonths.year,
+        month: activeEntriesMonths[0].month, // Simply take first one as they all have same value
+        year: activeEntriesMonths[0].year, // Simply take first one as they all have same value
       };
-      console.log("activeMonth");
-      console.log(activeMonth);
-
-      // this.$store.dispatch("updateActiveMonth", activeMonth);
-
-
+      this.$store.dispatch("updateActiveMonth", activeMonth);
     },
   },
 };
