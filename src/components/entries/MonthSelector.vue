@@ -12,10 +12,7 @@
 </template>
 
 <script>
-import {
-  IonSlides,
-  IonSlide,
-} from "@ionic/vue";
+import { IonSlides, IonSlide } from "@ionic/vue";
 
 export default {
   components: {

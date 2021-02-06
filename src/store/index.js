@@ -7,6 +7,34 @@ moment.locale("de");
 const store = createStore({
   state() {
     return {
+      categories: [
+        {
+          type: "expense",
+          key: "living",
+          value: "Wohnen",
+        },
+        {
+          type: "expense",
+          key: "household",
+          value: "Haushalt",
+        },
+        {
+          type: "expense",
+          key: "groceries",
+          value: "Lebensmittel",
+        },
+        {
+          type: "income",
+          key: "salary",
+          value: "Gehalt",
+        },
+        {
+          type: "income",
+          key: "gift",
+          value: "Geldgeschenk",
+        },
+      ],
+
       entries: [
         {
           id: 1,
@@ -18,7 +46,7 @@ const store = createStore({
         },
         // {
         //   id: 2,
-        //   date: "2020-10-13T14:48:00.000Z",
+        //   date: "2020-12-13T14:48:00.000Z",
         //   type: "expense",
         //   category: "Mobilität",
         //   amount: 2.31,
@@ -52,34 +80,6 @@ const store = createStore({
 
       entriesMonths: [],
 
-      categories: [
-        {
-          type: "expense",
-          key: "living",
-          value: "Wohnen",
-        },
-        {
-          type: "expense",
-          key: "household",
-          value: "Haushalt",
-        },
-        {
-          type: "expense",
-          key: "groceries",
-          value: "Lebensmittel",
-        },
-        {
-          type: "income",
-          key: "salary",
-          value: "Gehalt",
-        },
-        {
-          type: "income",
-          key: "gift",
-          value: "Geldgeschenk",
-        },
-      ],
-
       activeMonth: { month: 0, year: 0 },
     };
   },
@@ -100,26 +100,29 @@ const store = createStore({
   },
 
   mutations: {
-    addEntry(state, entryData) {
-      const newEntry = {
-        id: new Date().toISOString(),
-        date: entryData.date,
-        type: entryData.type,
-        category: entryData.category,
-        amount: entryData.amount,
-        note: entryData.note,
-      };
+    // Only once in beginning
+    initialUpdateActiveMonth(state) {
+      var entries = state.entries;
 
-      state.entries.push(newEntry);
-    },
+      //Sort entries
+      var order = -1;
+      entries.sort(function(a, b) {
+        a = new Date(a.date);
+        b = new Date(b.date);
+        var results = a > b ? -1 : a < b ? 1 : 0;
+        return results * order;
+      });
 
-    updateActiveMonth(state, activeMonth) {
-      state.activeMonth.month = activeMonth.month;
-      state.activeMonth.year = activeMonth.year;
+      // Save newest month to store
+      var newest_entry = entries[entries.length - 1];
+      var newest_month = moment(String(newest_entry.date)).format("MM");
+      var newest_year = moment(String(newest_entry.date)).format("YYYY");
+
+      state.activeMonth.month = newest_month;
+      state.activeMonth.year = newest_year;
     },
 
     updateEntriesMonths(state) {
-      console.log("in update entry");
       /* Create var "entriesMonths" that contains all available months in entries */
       var entriesMonths = [];
       var months_unique = [];
@@ -154,16 +157,31 @@ const store = createStore({
         }
       }
       state.entriesMonths = entriesMonths;
-      console.log("done with update entry");
     },
 
+    addEntry(state, entryData) {
+      const newEntry = {
+        id: new Date().toISOString(),
+        date: entryData.date,
+        type: entryData.type,
+        category: entryData.category,
+        amount: entryData.amount,
+        note: entryData.note,
+      };
+
+      state.entries.push(newEntry);
+    },
+
+    updateActiveMonth(state, activeMonth) {
+      state.activeMonth.month = activeMonth.month;
+      state.activeMonth.year = activeMonth.year;
+    },
   },
 
   actions: {
     addEntry(context, entryData) {
       context.commit("addEntry", entryData); // Place to store in backend server
       context.commit("updateEntriesMonths");
-
     },
     updateActiveMonth(context, activeMonth) {
       context.commit("updateActiveMonth", activeMonth); // Place to store in backend server
@@ -171,6 +189,7 @@ const store = createStore({
   },
 });
 
+store.commit("initialUpdateActiveMonth");
 store.commit("updateEntriesMonths");
 
 export default store;

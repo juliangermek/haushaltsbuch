@@ -9,7 +9,7 @@
     <ion-content class="ion-padding">
       <month-selector :entries-months="entriesMonths"></month-selector>
       <!-- <ion-button color="medium" @click="toggleSort">Reihenfolge umkehren</ion-button> -->
-      <entry-list :entries="entries"></entry-list>
+      <entry-list></entry-list>
     </ion-content>
   </base-layout>
 </template>
@@ -41,34 +41,12 @@ export default {
   },
 
   computed: {
-    entries() {
-      var entries = this.$store.getters.entries;
-
-      //Sort entries
-      var order = -1;
-      entries.sort(function(a, b) {
-        a = new Date(a.date);
-        b = new Date(b.date);
-        var results = a > b ? -1 : a < b ? 1 : 0;
-        return results * order;
-      });
-
-      // Save newest month to store
-      var newest_entry = entries[entries.length - 1];
-      var newest_month = moment(String(newest_entry.date)).format("MM");
-      var newest_year = moment(String(newest_entry.date)).format("YYYY");
-      const newestMonth = {
-        month: newest_month,
-        year: newest_year,
-      };
-      this.$store.dispatch("updateActiveMonth", newestMonth);
-
-      return entries;
-    },
-
     entriesMonths() {
       return this.$store.getters.entriesMonths;
     },
+    entries() {
+      return this.$store.getters.entries;
+    }
   },
 };
 </script>

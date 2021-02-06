@@ -15,7 +15,6 @@ import moment from "moment";
 import EntryListItem from "./EntryListItem.vue";
 
 export default {
-  props: ["entries"],
   components: {
     IonList,
     EntryListItem,
@@ -26,7 +25,7 @@ export default {
     },
 
     entries_filtered() {
-      var entries = this.entries;
+      var entries = this.$store.getters.entries;
       return entries.filter(
         (entries) =>
           moment(String(entries.date)).format("MM") == this.activeMonth.month &&
