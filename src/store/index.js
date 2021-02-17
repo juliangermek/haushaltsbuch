@@ -77,10 +77,6 @@ const store = createStore({
           note: "Steaks"
         },
       ],
-
-      entriesMonths: [],
-
-      activeMonth: { month: 0, year: 0 },
     };
   },
 
@@ -101,27 +97,6 @@ const store = createStore({
 
     categories(state) {
       return state.categories;
-    },
-
-    newestMonth(state) {
-      // Return newest month among entries as {month, year}
-      var entries = state.entries;
-
-      //Sort entries
-      var order = -1;
-      entries.sort(function(a, b) {
-        a = new Date(a.date);
-        b = new Date(b.date);
-        var results = a > b ? -1 : a < b ? 1 : 0;
-        return results * order;
-      });
-
-      // Save newest month to store
-      var newest_entry = entries[entries.length - 1];
-      var newest_month = moment(String(newest_entry.date)).format("MM");
-      var newest_year = moment(String(newest_entry.date)).format("YYYY");
-
-      return {newest_month, newest_year};
     },
 
     entriesMonths(state) {
@@ -173,7 +148,7 @@ const store = createStore({
         amount: entryData.amount,
         note: entryData.note,
       };
-
+      console.log("right before push")
       state.entries.push(newEntry);
     },
   },
