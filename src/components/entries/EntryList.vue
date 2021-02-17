@@ -1,7 +1,8 @@
 <template>
+  <month-selector :entries-months="entriesMonths" @change-active-slide="changeActiveSlide"></month-selector>
   <ion-list>
     <entry-list-item
-      v-for="entry in entries_filtered"
+      v-for="entry in filtered_entries"
       :key="entry.id"
       :entry="entry"
     ></entry-list-item>
@@ -13,24 +14,51 @@ import { IonList } from "@ionic/vue";
 import moment from "moment";
 
 import EntryListItem from "./EntryListItem.vue";
+import MonthSelector from "./MonthSelector.vue";
 
 export default {
   components: {
     IonList,
     EntryListItem,
+    MonthSelector
   },
+
+  data() {
+    return {
+      activeSlide: 0,
+    }
+  },
+
   computed: {
-    activeMonth() {
-      return this.$store.getters.activeMonth;
+    sorted_entries() {
+      return this.$store.getters.sorted_entries;
+    },
+    
+    entriesMonths() {
+      return this.$store.getters.entriesMonths;
     },
 
-    entries_filtered() {
-      var entries = this.$store.getters.entries;
-      return entries.filter(
-        (entries) =>
-          moment(String(entries.date)).format("MM") == this.activeMonth.month &&
-          moment(String(entries.date)).format("YYYY") == this.activeMonth.year
+    filtered_entries() {
+      var activeMonth = this.entriesMonths.filter(
+        month => month.index == this.activeSlide
       );
+      var sorted_entries = this.$store.getters.sorted_entries;
+      return sorted_entries.filter(
+        (entry) =>
+          moment(String(entry.date)).format("MM") == activeMonth[0].month &&
+          moment(String(entry.date)).format("YYYY") == activeMonth[0].year
+      );
+    },
+  },
+
+  beforeMount() {
+    // Initially set activeSlide
+    this.activeSlide = this.entriesMonths.length - 1;
+  },
+
+  methods: {
+    changeActiveSlide(newSlideIndex) {
+      this.activeSlide = newSlideIndex;
     },
   },
 };

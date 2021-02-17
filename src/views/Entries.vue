@@ -7,8 +7,6 @@
     </template>
 
     <ion-content class="ion-padding">
-      <month-selector :entries-months="entriesMonths"></month-selector>
-      <!-- <ion-button color="medium" @click="toggleSort">Reihenfolge umkehren</ion-button> -->
       <entry-list></entry-list>
     </ion-content>
   </base-layout>
@@ -18,11 +16,6 @@
 import { IonButton, IonIcon, IonContent } from "@ionic/vue";
 import { add } from "ionicons/icons";
 
-import moment from "moment";
-import "moment/locale/de"; // without this line it didn't work
-moment.locale("de");
-
-import MonthSelector from "../components/entries/MonthSelector.vue";
 import EntryList from "../components/entries/EntryList.vue";
 
 export default {
@@ -30,7 +23,6 @@ export default {
     IonButton,
     IonIcon,
     IonContent,
-    MonthSelector,
     EntryList,
   },
 
@@ -38,15 +30,6 @@ export default {
     return {
       add,
     };
-  },
-
-  computed: {
-    entriesMonths() {
-      return this.$store.getters.entriesMonths;
-    },
-    entries() {
-      return this.$store.getters.entries;
-    }
   },
 };
 </script>

@@ -25,11 +25,10 @@ export default {
   data() {
     return {
       slideOpts: {
-        initialSlide: this.entriesMonths.length - 1, // Start with newest slide / month
+        initialSlide: this.entriesMonths.length - 1, // Start with newest slide/month
         speed: 300,
         pagination: false,
       },
-      activeSlide: 0,
     };
   },
 
@@ -40,19 +39,8 @@ export default {
 
       // Update activeSlide and button availability
       const activeSlide = s.activeIndex;
-      this.activeSlide = activeSlide;
-
-      // Update store
-      const entriesMonths = this.entriesMonths;
-      const activeEntriesMonths = entriesMonths.filter(
-        (entriesMonths) => entriesMonths.index == activeSlide // get only months on activeSlide
-      );
-
-      const activeMonth = {
-        month: activeEntriesMonths[0].month, // Simply take first one as they all have same value
-        year: activeEntriesMonths[0].year, // Simply take first one as they all have same value
-      };
-      this.$store.dispatch("updateActiveMonth", activeMonth);
+      console.log("changed to " + activeSlide)
+      this.$emit('change-active-slide', activeSlide);
     },
   },
 };

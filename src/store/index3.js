@@ -52,30 +52,30 @@ const store = createStore({
           amount: 2.31,
           note: "Edeka"
         },
-        {
-          id: 3,
-          date: "2020-11-28T14:48:00.000Z",
-          type: "income",
-          category: "Gehalt",
-          amount: 2000.00,
-          note: "Edeka"
-        },
-        {
-          id: 4,
-          date: "2020-11-14T14:48:00.000Z",
-          type: "expense",
-          category: "Wohnen",
-          amount: 59.99,
-          note: "Stuhl"
-        },
-        {
-          id: 5,
-          date: "2019-11-14T14:48:00.000Z",
-          type: "expense",
-          category: "Lebensmittel",
-          amount: 123.45,
-          note: "Steaks"
-        },
+        // {
+        //   id: 3,
+        //   date: "2020-11-28T14:48:00.000Z",
+        //   type: "income",
+        //   category: "Gehalt",
+        //   amount: 2000.00,
+        //   note: "Edeka"
+        // },
+        // {
+        //   id: 4,
+        //   date: "2020-11-14T14:48:00.000Z",
+        //   type: "expense",
+        //   category: "Wohnen",
+        //   amount: 59.99,
+        //   note: "Stuhl"
+        // },
+        // {
+        //   id: 5,
+        //   date: "2019-11-14T14:48:00.000Z",
+        //   type: "expense",
+        //   category: "Lebensmittel",
+        //   amount: 123.45,
+        //   note: "Steaks"
+        // },
       ],
 
       entriesMonths: [],
@@ -85,26 +85,23 @@ const store = createStore({
   },
 
   getters: {
-    sorted_entries(state) {
-      var sorted_entries = state.entries;
-
-      //Sort entries
-      var order = -1;
-      sorted_entries.sort(function(a, b) {
-        a = new Date(a.date);
-        b = new Date(b.date);
-        var results = a > b ? -1 : a < b ? 1 : 0;
-        return results * order;
-      });
-      return sorted_entries;
+    entries(state) {
+      return state.entries;
     },
-
     categories(state) {
       return state.categories;
     },
+    activeMonth(state) {
+      return state.activeMonth;
+    },
+    entriesMonths(state) {
+      return state.entriesMonths;
+    },
+  },
 
-    newestMonth(state) {
-      // Return newest month among entries as {month, year}
+  mutations: {
+    // Only once in beginning
+    initialUpdateActiveMonth(state) {
       var entries = state.entries;
 
       //Sort entries
@@ -121,11 +118,12 @@ const store = createStore({
       var newest_month = moment(String(newest_entry.date)).format("MM");
       var newest_year = moment(String(newest_entry.date)).format("YYYY");
 
-      return {newest_month, newest_year};
+      state.activeMonth.month = newest_month;
+      state.activeMonth.year = newest_year;
     },
 
-    entriesMonths(state) {
-      // Return an ordered arrays of all months present among entries
+    updateEntriesMonths(state) {
+      /* Create var "entriesMonths" that contains all available months in entries */
       var entriesMonths = [];
       var months_unique = [];
       var current_index = 0;
@@ -158,12 +156,9 @@ const store = createStore({
           current_index++;
         }
       }
-
-      return entriesMonths;
+      state.entriesMonths = entriesMonths;
     },
-  },
 
-  mutations: {
     addEntry(state, entryData) {
       const newEntry = {
         id: new Date().toISOString(),
@@ -176,13 +171,25 @@ const store = createStore({
 
       state.entries.push(newEntry);
     },
+
+    updateActiveMonth(state, activeMonth) {
+      state.activeMonth.month = activeMonth.month;
+      state.activeMonth.year = activeMonth.year;
+    },
   },
 
   actions: {
     addEntry(context, entryData) {
       context.commit("addEntry", entryData); // Place to store in backend server
+      context.commit("updateEntriesMonths");
+    },
+    updateActiveMonth(context, activeMonth) {
+      context.commit("updateActiveMonth", activeMonth); // Place to store in backend server
     },
   },
 });
+
+store.commit("initialUpdateActiveMonth");
+store.commit("updateEntriesMonths");
 
 export default store;
