@@ -20,16 +20,20 @@ export default {
     IonSlide,
   },
 
-  props: ["entriesMonths"],
-
   data() {
     return {
       slideOpts: {
-        initialSlide: this.entriesMonths.length - 1, // Start with newest slide/month
+        initialSlide: this.$store.getters.entriesMonths.length - 1, // Start with newest slide/month
         speed: 300,
         pagination: false,
       },
     };
+  },
+
+  computed: {
+    entriesMonths() {
+      return this.$store.getters.entriesMonths;
+    },
   },
 
   methods: {
@@ -39,8 +43,8 @@ export default {
 
       // Update activeSlide and button availability
       const activeSlide = s.activeIndex;
-      console.log("changed to " + activeSlide)
-      this.$emit('change-active-slide', activeSlide);
+      console.log("changed to " + activeSlide);
+      this.$emit("change-active-slide", activeSlide);
     },
   },
 };

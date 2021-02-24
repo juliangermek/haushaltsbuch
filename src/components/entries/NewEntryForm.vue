@@ -101,7 +101,7 @@ export default {
         date: this.selectedDate,
         type: this.selectedCategoryType,
         category: this.selectedCategory,
-        amount: this.enteredAmount,
+        amount: parseFloat(this.enteredAmount),
         note: this.enteredNote,
       };
       this.$emit("add-entry", entryData);

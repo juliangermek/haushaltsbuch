@@ -1,5 +1,5 @@
 <template>
-  <month-selector :entries-months="entriesMonths" @change-active-slide="changeActiveSlide"></month-selector>
+  <month-selector @change-active-slide="changeActiveSlide"></month-selector>
   <ion-list>
     <entry-list-item
       v-for="entry in filtered_entries"

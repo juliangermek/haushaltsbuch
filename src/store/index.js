@@ -148,8 +148,9 @@ const store = createStore({
         amount: entryData.amount,
         note: entryData.note,
       };
-      console.log("right before push")
+      console.log("right before push");
       state.entries.push(newEntry);
+      // debugger;
     },
   },
 
