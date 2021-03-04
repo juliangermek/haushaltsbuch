@@ -32,9 +32,9 @@
         >
           <ion-select-option
             v-for="category in filteredCategories"
-            :key="category.key"
-            v-bind:value="category.key"
-            >{{ category.value }}</ion-select-option
+            :key="category.name"
+            v-bind:value="category.name"
+            >{{ category.name }}</ion-select-option
           >
         </ion-select>
       </ion-item>
@@ -109,12 +109,9 @@ export default {
   },
   computed: {
     filteredCategories: function() {
-      return this.categories.filter(
+      return this.$store.getters.categories.filter(
         (category) => category.type == this.selectedCategoryType
       );
-    },
-    categories() {
-      return this.$store.getters.categories;
     },
   },
 };

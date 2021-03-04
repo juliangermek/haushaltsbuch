@@ -10,28 +10,23 @@ const store = createStore({
       categories: [
         {
           type: "expense",
-          key: "living",
-          value: "Wohnen",
+          name: "Wohnen",
         },
         {
           type: "expense",
-          key: "household",
-          value: "Haushalt",
+          name: "Haushalt",
         },
         {
           type: "expense",
-          key: "groceries",
-          value: "Lebensmittel",
+          name: "Lebensmittel",
         },
         {
           type: "income",
-          key: "salary",
-          value: "Gehalt",
+          name: "Gehalt",
         },
         {
           type: "income",
-          key: "gift",
-          value: "Geldgeschenk",
+          name: "Geldgeschenk",
         },
       ],
 
@@ -116,6 +111,7 @@ const store = createStore({
         return results * order;
       });
 
+      // Add entry if not present yet
       for (var i in entries) {
         var month = moment(String(entries[i].date)).format("MM");
         var year = moment(String(entries[i].date)).format("YYYY");
@@ -148,9 +144,7 @@ const store = createStore({
         amount: entryData.amount,
         note: entryData.note,
       };
-      console.log("right before push");
       state.entries.push(newEntry);
-      // debugger;
     },
   },
 

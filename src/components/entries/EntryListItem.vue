@@ -28,7 +28,6 @@
         </ion-row>
       </ion-grid>
     </ion-item>
-    <p>{{ entry.date }}</p>
 
     <ion-item-options>
       <ion-item-option color="primary">

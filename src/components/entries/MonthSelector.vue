@@ -23,18 +23,20 @@ export default {
   data() {
     return {
       slideOpts: {
-        initialSlide: this.$store.getters.entriesMonths.length - 1, // Start with newest slide/month
+        initialSlide: 0, // Start with newest slide/month
         speed: 300,
         pagination: false,
       },
     };
   },
 
-  computed: {
-    entriesMonths() {
-      return this.$store.getters.entriesMonths;
-    },
-  },
+  props: ["entriesMonths"],
+
+// computed: {
+//   entriesMonths() {
+//     return this.$store.getters.entriesMonths;
+//   },
+// },
 
   methods: {
     async slideChanged() {
