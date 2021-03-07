@@ -18,6 +18,9 @@ export default {
     IonSlides,
     IonSlide,
   },
+
+  emits: ["change-active-slide"],
+
   data() {
     return {
       slideOpts: {
@@ -33,6 +36,7 @@ export default {
     },
   },
 
+  // Update slider when store changed
   watch: {
     async entriesMonths(val) {
       const s = await this.$refs.mySlider.$el.getSwiper();
@@ -58,6 +62,7 @@ export default {
     },
   },
 
+  // Initialize slider
   async mounted () {
     const s = await this.$refs.mySlider.$el.getSwiper();
     const entriesMonths = this.entriesMonths;
