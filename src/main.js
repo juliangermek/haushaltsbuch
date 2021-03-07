@@ -4,6 +4,7 @@ import App from './App.vue'
 import BaseLayout from './components/BaseLayout.vue';
 import router from './router';
 import store from './store';
+import {firestorePlugin} from 'vuefire';
 
 import { IonicVue } from '@ionic/vue';
 
@@ -30,7 +31,8 @@ import './theme/core.css'
 const app = createApp(App)
   .use(IonicVue)
   .use(router)
-  .use(store);
+  .use(store)
+  .use(firestorePlugin);
 
 app.component('base-layout', BaseLayout)
   

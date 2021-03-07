@@ -14,9 +14,11 @@
     "@ionic/vue": "^5.4.0",
     "@ionic/vue-router": "^5.4.0",
     "core-js": "^3.6.5",
+    "firebase": "^8.2.10-20212222149",
     "moment": "^2.29.1",
     "vue": "^3.0.0-0",
     "vue-router": "^4.0.0-0",
+    "vuefire": "^3.0.0-alpha.2",
     "vuex": "^4.0.0-rc.2"
   },
   "devDependencies": {
