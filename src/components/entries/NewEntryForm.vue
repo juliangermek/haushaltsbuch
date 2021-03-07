@@ -29,11 +29,11 @@
           interface="action-sheet"
           v-model="selectedCategory"
           aria-required="required"
+          required
         >
           <ion-select-option
             v-for="category in filteredCategories"
             :key="category.name"
-            v-bind:value="category.name"
             >{{ category.name }}</ion-select-option
           >
         </ion-select>

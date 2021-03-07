@@ -1,15 +1,18 @@
 <template>
-  <ion-slides>
-    <ion-slide v-for="month in entriesMonths" :key="month.index">
-      {{ month.displayMonth }}
+  <ion-slides ref="mySlider">
+    <ion-slide>
+      Initialize
     </ion-slide>
+    <!-- <ion-slide v-for="month in entriesMonths" :key="month.index">
+      {{ month.displayMonth }}
+    </ion-slide> -->
   </ion-slides>
 
   <p v-for="month in entriesMonths" :key="month.index">
     <span>{{ month.displayMonth }}</span>
   </p>
 
-  <ion-button color="primary" @click="add()">
+  <ion-button color="primary" @click="destroy()">
     Add
   </ion-button>
 </template>
@@ -17,6 +20,7 @@
 <script>
 import { IonButton } from "@ionic/vue";
 import { IonSlides, IonSlide } from "@ionic/vue";
+
 import moment from "moment";
 
 export default {
@@ -96,6 +100,24 @@ export default {
         date: "2019-11-14T14:48:00.000Z",
       };
       this.entries.push(newEntry);
+    },
+    async destroy() {
+      const s = await this.$refs.mySlider.$el.getSwiper();
+      const entriesMonths = this.entriesMonths;
+      s.removeAllSlides();
+
+      for (var i = 0; i < entriesMonths.length; i++) {
+        const month = entriesMonths[i].displayMonth
+        s.appendSlide("<ion-slide>" + month + "</ion-slide>");
+      }
+
+      // console.log(this.entriesMonths);
+      // this.entriesMonths.foreach(addSlide);
+
+      // function addSlide(item, index) {
+      //   console.log(index + ": " + item);
+      //   s.appendSlide("<ion-slide>" + item + "</ion-slide>");
+      // }
     },
   },
 };

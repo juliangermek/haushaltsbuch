@@ -71,6 +71,22 @@ const store = createStore({
           amount: 123.45,
           note: "Steaks"
         },
+        {
+          id: 6,
+          date: "2020-12-19T14:48:00.000Z",
+          type: "expense",
+          category: "Haushalt",
+          amount: 22,
+          note: "Putzmittel"
+        },
+        {
+          id: 7,
+          date: "2020-12-20T14:48:00.000Z",
+          type: "expense",
+          category: "Haushalt",
+          amount: 11,
+          note: "Mehr Putzmittel"
+        },
       ],
     };
   },

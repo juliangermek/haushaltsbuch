@@ -6,7 +6,9 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content class="ion-padding">Stats!</ion-content>
+    <ion-content class="ion-padding">
+      <month-overview></month-overview>
+    </ion-content>
   </ion-page>
 </template>
 
@@ -19,7 +21,9 @@ import {
   IonToolbar
 } from '@ionic/vue';
 
+import MonthOverview from "../components/stats/MonthOverview.vue";
+
 export default {
-  components: { IonContent, IonHeader, IonPage, IonTitle, IonToolbar }
+  components: { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, MonthOverview }
 };
 </script>
