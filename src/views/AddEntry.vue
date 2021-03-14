@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     addEntry(entryData) {
-      this.$store.dispatch("addEntry", entryData);
+      this.$store.dispatch("addEntry", {entryData: entryData});
       this.$router.replace("/"); //replace: no going back (as against 'push')
     }
   }

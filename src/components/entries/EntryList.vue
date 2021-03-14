@@ -3,10 +3,12 @@
   <ion-list>
     <entry-list-item
       v-for="entry in filtered_entries"
-      :key="entry.id"
+      :key="entry.date"
       :entry="entry"
     ></entry-list-item>
   </ion-list>
+  <p>{{sorted_entries}}</p>
+  <p>{{entries}}</p>
 </template>
 
 <script>
@@ -26,7 +28,15 @@ export default {
     }
   },
   computed: {
+    entries() {
+      console.log("Getting entries");
+      console.log(this.$store.getters.entries);
+      return this.$store.getters.entries;
+    },
+
     sorted_entries() {
+      console.log("Getting sorted_entries");
+      console.log(this.$store.getters.sorted_entries);
       return this.$store.getters.sorted_entries;
     },
     
@@ -34,6 +44,7 @@ export default {
       return this.$store.getters.entriesMonths;
     },
     filtered_entries() {
+      console.log("filtering entries");
       var activeMonth = this.entriesMonths.filter(
         month => month.index == this.activeSlide
       );

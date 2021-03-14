@@ -19,7 +19,8 @@
     "vue": "^3.0.0-0",
     "vue-router": "^4.0.0-0",
     "vuefire": "^3.0.0-alpha.2",
-    "vuex": "^4.0.0-rc.2"
+    "vuex": "^4.0.0-rc.2",
+    "vuexfire": "^3.2.5"
   },
   "devDependencies": {
     "@capacitor/cli": "2.4.5",
@@ -33,7 +34,7 @@
     "@vue/test-utils": "^2.0.0-0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0-0",
-    "vue-jest": "^5.0.0-0"
+    "vue-jest": "^5.0.0-alpha.8"
   },
   "description": "An Ionic project"
 }

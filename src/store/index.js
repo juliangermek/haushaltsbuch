@@ -1,4 +1,7 @@
 import { createStore } from "vuex";
+import { vuexfireMutations, firestoreAction } from "vuexfire";
+import { db } from "./db";
+import firebase from "firebase";
 
 import moment from "moment";
 import "moment/locale/de"; // without this line it didn't work
@@ -31,67 +34,92 @@ const store = createStore({
       ],
 
       entries: [
-        {
-          id: 1,
-          date: "2020-10-15T14:48:00.000Z",
-          type: "expense",
-          category: "Lebensmittel",
-          amount: 15.24,
-          note: "Edeka",
-        },
-        {
-          id: 2,
-          date: "2020-12-13T14:48:00.000Z",
-          type: "expense",
-          category: "Mobilität",
-          amount: 2.31,
-          note: "Edeka"
-        },
-        {
-          id: 3,
-          date: "2020-11-28T14:48:00.000Z",
-          type: "income",
-          category: "Gehalt",
-          amount: 2000.00,
-          note: "Edeka"
-        },
-        {
-          id: 4,
-          date: "2020-11-14T14:48:00.000Z",
-          type: "expense",
-          category: "Wohnen",
-          amount: 59.99,
-          note: "Stuhl"
-        },
-        {
-          id: 5,
-          date: "2019-11-14T14:48:00.000Z",
-          type: "expense",
-          category: "Lebensmittel",
-          amount: 123.45,
-          note: "Steaks"
-        },
-        {
-          id: 6,
-          date: "2020-12-19T14:48:00.000Z",
-          type: "expense",
-          category: "Haushalt",
-          amount: 22,
-          note: "Putzmittel"
-        },
-        {
-          id: 7,
-          date: "2020-12-20T14:48:00.000Z",
-          type: "expense",
-          category: "Haushalt",
-          amount: 11,
-          note: "Mehr Putzmittel"
-        },
+        // {
+        //   id: 1,
+        //   date: "2020-10-15T14:48:00.000Z",
+        //   type: "expense",
+        //   category: "Lebensmittel",
+        //   amount: 15.24,
+        //   note: "Edeka",
+        // },
+        // {
+        //   id: 2,
+        //   date: "2020-12-13T14:48:00.000Z",
+        //   type: "expense",
+        //   category: "Mobilität",
+        //   amount: 2.31,
+        //   note: "Edeka",
+        // },
+        // {
+        //   id: 3,
+        //   date: "2020-11-28T14:48:00.000Z",
+        //   type: "income",
+        //   category: "Gehalt",
+        //   amount: 2000.0,
+        //   note: "Edeka",
+        // },
+        // {
+        //   id: 4,
+        //   date: "2020-11-14T14:48:00.000Z",
+        //   type: "expense",
+        //   category: "Wohnen",
+        //   amount: 59.99,
+        //   note: "Stuhl",
+        // },
+        // {
+        //   id: 5,
+        //   date: "2019-11-14T14:48:00.000Z",
+        //   type: "expense",
+        //   category: "Lebensmittel",
+        //   amount: 123.45,
+        //   note: "Steaks",
+        // },
+        // {
+        //   id: 6,
+        //   date: "2020-12-19T14:48:00.000Z",
+        //   type: "expense",
+        //   category: "Haushalt",
+        //   amount: 22,
+        //   note: "Putzmittel",
+        // },
+        // {
+        //   id: 7,
+        //   date: "2020-12-20T14:48:00.000Z",
+        //   type: "expense",
+        //   category: "Haushalt",
+        //   amount: 11,
+        //   note: "Mehr Putzmittel",
+        // },
       ],
     };
   },
 
+  mutations: vuexfireMutations,
+
+  actions: {
+    bindEntries: firestoreAction(({ bindFirestoreRef }) => {
+      // return the promise returned by `bindFirestoreRef`
+      return bindFirestoreRef("entries", db.collection("Items"));
+    }),
+
+    addEntry: firestoreAction(async ({ state }, { entryData }) => {
+      console.log(state);
+      await db.collection("Items").add({
+        date: entryData.date,
+        type: entryData.type,
+        category: entryData.category,
+        amount: entryData.amount,
+        note: entryData.note,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+    }),
+  },
+
   getters: {
+    entries(state) {
+      return state.entries;
+    },
+
     sorted_entries(state) {
       var sorted_entries = state.entries;
 
@@ -149,26 +177,7 @@ const store = createStore({
       return entriesMonths;
     },
   },
-
-  mutations: {
-    addEntry(state, entryData) {
-      const newEntry = {
-        id: new Date().toISOString(),
-        date: entryData.date,
-        type: entryData.type,
-        category: entryData.category,
-        amount: entryData.amount,
-        note: entryData.note,
-      };
-      state.entries.push(newEntry);
-    },
-  },
-
-  actions: {
-    addEntry(context, entryData) {
-      context.commit("addEntry", entryData); // Place to store in backend server
-    },
-  },
 });
 
+store.dispatch("bindEntries");
 export default store;

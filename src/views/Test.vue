@@ -1,23 +1,16 @@
 <template>
-  <p>hello!</p>
-  {{items}}
+  <h3>Store Entries</h3>
+  <p>{{ entries }}</p>
 </template>
 
 <script>
-import {db} from '../store/db';
 export default {
-  data() {
-    return {
-      items: [],
-    }
+  computed: {
+    entries() {
+      console.log("Getting entries");
+      console.log(this.$store.getters.entries);
+      return this.$store.getters.entries;
+    },
   },
-
-  methods: {
-
-  },
-
-  firestore: {
-    items: db.collection("Items")
-  }
-}
+};
 </script>
