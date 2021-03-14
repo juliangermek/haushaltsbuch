@@ -34,14 +34,14 @@ const store = createStore({
       ],
 
       entries: [
-        // {
-        //   id: 1,
-        //   date: "2020-10-15T14:48:00.000Z",
-        //   type: "expense",
-        //   category: "Lebensmittel",
-        //   amount: 15.24,
-        //   note: "Edeka",
-        // },
+        {
+          id: 1,
+          date: "2020-10-15T14:48:00.000Z",
+          type: "expense",
+          category: "Lebensmittel",
+          amount: 15.24,
+          note: "Edeka",
+        },
         // {
         //   id: 2,
         //   date: "2020-12-13T14:48:00.000Z",
@@ -179,5 +179,5 @@ const store = createStore({
   },
 });
 
-store.dispatch("bindEntries");
+// store.dispatch("bindEntries");
 export default store;

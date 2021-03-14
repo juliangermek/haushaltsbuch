@@ -15,7 +15,7 @@
           <ion-button type="submit" expand="block">Account erstellen</ion-button>
         </form>
         <br>
-        <p align="center">Du hast schon einen Account? <router-link to="/login">Zum Login</router-link></p>
+        <p align="center">Du hast schon einen Account? Zum Login</p>
       </ion-card-content>
     </ion-card>
     <ion-card v-if="wasSuccessful" class="success-message">
