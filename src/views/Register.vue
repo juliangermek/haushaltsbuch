@@ -15,7 +15,7 @@
           <ion-button type="submit" expand="block">Account erstellen</ion-button>
         </form>
         <br>
-        <p align="center">Du hast schon einen Account? <router-link to="/login">Zum Login</router-link></p>
+        <p align="center">Du hast schon einen Account? <router-link to="/login" replace>Zum Login</router-link></p>
       </ion-card-content>
     </ion-card>
     <ion-card v-if="wasSuccessful" class="success-message">
@@ -85,7 +85,7 @@ export default {
             this.errorMessage =
               "Das Passwort muss mindestens 6 Zeichen lang sein.";
           } else {
-            this.errorMessage = "Es ist ein unbekannter fehler aufgetreten.";
+            this.errorMessage = "Es ist ein unbekannter Fehler aufgetreten.";
           }
           this.wasSuccessful = false;
           this.wasUnsuccessful = true;

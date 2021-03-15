@@ -14,11 +14,6 @@ export default defineComponent({
     IonApp,
     IonRouterOutlet
   },
-
-  beforeMount() {
-    console.log("beforeMount");
-    this.$store.dispatch('bindEntries');
-  }
 });
 </script>
 
